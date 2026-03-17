@@ -330,7 +330,7 @@ const MonthCalendar: React.FunctionComponent<DateTimePickerProps> = ({
                                 }}
                               />
                               <Button
-                                size="sm"
+                                size="icon"
                                 variant="ghost"
                                 onClick={() => {
                                   onChange([
@@ -339,12 +339,12 @@ const MonthCalendar: React.FunctionComponent<DateTimePickerProps> = ({
                                   ]);
                                 }}
                               >
-                                <XIcon data-icon="inline-start" />
+                                <XIcon />
                               </Button>
                             </div>
                           );
                         })}
-                        <div className="flex items-center space-x-3">
+                        <div className="flex items-center space-x-2">
                           <Button
                             onClick={() => {
                               const lastOption = expectTimeOption(
@@ -379,8 +379,8 @@ const MonthCalendar: React.FunctionComponent<DateTimePickerProps> = ({
                           </Button>
                           <DropdownMenu>
                             <DropdownMenuTrigger asChild={true}>
-                              <Button variant="ghost" size="sm">
-                                <MoreHorizontalIcon data-icon="inline-start" />
+                              <Button variant="ghost" size="icon">
+                                <MoreHorizontalIcon />
                               </Button>
                             </DropdownMenuTrigger>
                             <DropdownMenuContent align="start">
