@@ -43,13 +43,17 @@ const TimeRange: React.FunctionComponent<{
 const TimelineRow = ({
   children,
   top,
-}: React.PropsWithChildren<{ top?: number }>) => {
+  rowSpan = 0,
+}: React.PropsWithChildren<{ top?: number; rowSpan?: number }>) => {
   return (
     <tr>
-      <th
-        style={{ minWidth: 235, width: 300, top }}
-        className="sticky left-0 z-30 bg-background pr-4 pl-4"
-      />
+      {rowSpan > 0 ? (
+        <th
+          rowSpan={rowSpan}
+          style={{ minWidth: 235, width: 235, top }}
+          className={cn("sticky left-0 z-30 border-b bg-background px-4 py-2")}
+        />
+      ) : null}
       {children}
     </tr>
   );
@@ -76,7 +80,7 @@ const PollHeader = () => {
 
   return (
     <>
-      <TimelineRow top={0}>
+      <TimelineRow top={0} rowSpan={3}>
         {monthGroups.map((group) => (
           <th
             key={`${group.month} ${group.year}`}
