@@ -1,5 +1,3 @@
-"use client";
-
 import { usePostHog } from "@rallly/posthog/client";
 import { Button } from "@rallly/ui/button";
 import {
@@ -10,15 +8,19 @@ import {
   DialogTitle,
 } from "@rallly/ui/dialog";
 import React, { useState } from "react";
-import { usePreferences } from "@/contexts/preferences";
 import { Trans } from "@/i18n/client";
 import { getBrowserTimeZone } from "@/utils/date-time-utils";
 import { safeLocalStorage } from "@/utils/local-storage";
 
-export function TimeZoneChangeDetector() {
+export function TimeZoneChangeDetector({
+  initialTimeZone,
+  onTimeZoneChange,
+}: {
+  initialTimeZone?: string;
+  onTimeZoneChange?: (timeZone: string) => void;
+}) {
   const [open, setOpen] = useState(false);
 
-  const { preferences, updatePreferences } = usePreferences();
   const currentTimeZone = getBrowserTimeZone();
 
   const [previousTimeZone, setPreviousTimeZone] = useState(() => {
@@ -27,7 +29,7 @@ export function TimeZoneChangeDetector() {
       return cachedPreviousTimeZone;
     }
 
-    const timeZone = preferences.timeZone ?? currentTimeZone;
+    const timeZone = initialTimeZone ?? currentTimeZone;
 
     safeLocalStorage.setItem("previousTimeZone", timeZone);
 
@@ -69,8 +71,8 @@ export function TimeZoneChangeDetector() {
           <Button
             variant="primary"
             onClick={() => {
-              localStorage.setItem("previousTimeZone", currentTimeZone);
-              updatePreferences({ timeZone: currentTimeZone });
+              safeLocalStorage.setItem("previousTimeZone", currentTimeZone);
+              onTimeZoneChange?.(currentTimeZone);
               setOpen(false);
               posthog?.capture("timezone change accepted", {
                 previousTimeZone,
@@ -86,7 +88,7 @@ export function TimeZoneChangeDetector() {
           <Button
             onClick={() => {
               setPreviousTimeZone(currentTimeZone);
-              localStorage.setItem("previousTimeZone", currentTimeZone);
+              safeLocalStorage.setItem("previousTimeZone", currentTimeZone);
               setOpen(false);
               posthog?.capture("timezone change rejected", {
                 previousTimeZone,
