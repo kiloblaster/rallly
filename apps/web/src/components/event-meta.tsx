@@ -42,7 +42,7 @@ export function EventMetaList({
   className?: string;
   children: React.ReactNode;
 }) {
-  return <ul className={cn(className, "mt-6 space-y-3")}>{children}</ul>;
+  return <ul className={cn(className, "mt-4 space-y-2")}>{children}</ul>;
 }
 
 export function EventMetaItem({
