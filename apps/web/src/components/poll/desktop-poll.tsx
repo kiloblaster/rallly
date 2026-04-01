@@ -54,6 +54,121 @@ function EscapeListener({ onEscape }: { onEscape: () => void }) {
   return null;
 }
 
+function TableControls({
+  optionCount,
+  showTimeZone,
+  showScrollControls,
+  canScrollPrev,
+  canScrollNext,
+  showScrollIndicator,
+  expanded,
+  onExpand,
+  onCollapse,
+  onGoToPreviousPage,
+  onGoToNextPage,
+}: {
+  optionCount: number;
+  showTimeZone: boolean;
+  showScrollControls: boolean;
+  canScrollPrev: boolean;
+  canScrollNext: boolean;
+  showScrollIndicator: boolean;
+  expanded: boolean;
+  onExpand: () => void;
+  onCollapse: () => void;
+  onGoToPreviousPage: () => void;
+  onGoToNextPage: () => void;
+}) {
+  return (
+    <div className="flex items-center gap-4">
+      {showTimeZone ? (
+        <>
+          <TimesShownIn />
+          <span className="h-4 w-px bg-border" />
+        </>
+      ) : null}
+      <div className="text-muted-foreground text-sm">
+        <Trans i18nKey="optionCount" values={{ count: optionCount }} />
+      </div>
+      <div className="flex gap-x-1">
+        {showScrollControls ? (
+          <>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  disabled={!canScrollPrev}
+                  onClick={onGoToPreviousPage}
+                >
+                  <Icon>
+                    <ArrowLeftIcon />
+                  </Icon>
+                </Button>
+              </TooltipTrigger>
+              <TooltipContent>
+                <Trans i18nKey="scrollLeft" defaults="Scroll Left" />
+              </TooltipContent>
+            </Tooltip>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Button
+                  className="relative"
+                  variant="ghost"
+                  size="icon"
+                  disabled={!canScrollNext}
+                  onClick={onGoToNextPage}
+                >
+                  <Icon>
+                    <ArrowRightIcon />
+                  </Icon>
+                  {showScrollIndicator ? (
+                    <span className="absolute -top-0.5 -right-0.5 flex size-2">
+                      <span className="absolute top-0 right-0 inline-flex h-full w-full animate-ping rounded-full bg-rose-400 opacity-75" />
+                      <span className="relative inline-flex size-2 rounded-full bg-rose-500" />
+                    </span>
+                  ) : null}
+                </Button>
+              </TooltipTrigger>
+              <TooltipContent>
+                <Trans i18nKey="scrollRight" defaults="Scroll Right" />
+              </TooltipContent>
+            </Tooltip>
+            {expanded ? (
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Button variant="ghost" size="icon" onClick={onCollapse}>
+                    <Icon>
+                      <ShrinkIcon />
+                    </Icon>
+                  </Button>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <Trans i18nKey="shrink" defaults="Shrink" />
+                </TooltipContent>
+              </Tooltip>
+            ) : (
+              <Tooltip delayDuration={0}>
+                <TooltipTrigger asChild>
+                  <Button variant="ghost" size="icon" onClick={onExpand}>
+                    <Icon>
+                      <ExpandIcon />
+                    </Icon>
+                  </Button>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <Trans i18nKey="expand" defaults="Expand" />
+                </TooltipContent>
+              </Tooltip>
+            )}
+            {expanded ? <EscapeListener onEscape={onCollapse} /> : null}
+          </>
+        ) : null}
+      </div>
+    </div>
+  );
+}
+
 const DesktopPoll: React.FunctionComponent = () => {
   const poll = usePoll();
 
@@ -61,37 +176,20 @@ const DesktopPoll: React.FunctionComponent = () => {
 
   const [didScroll, setDidScroll] = React.useState(false);
 
-  const goToNextPage = () => {
-    setDidScroll(true);
-    if (scrollRef.current) {
-      scrollRef.current.scrollTo({
-        left: scrollRef.current.scrollLeft + 235,
-        behavior: "smooth",
-      });
-    }
-  };
-
   const { canAddNewParticipant } = usePermissions();
   const [expanded, setExpanded] = React.useState(false);
 
-  const expand = () => {
+  const expand = React.useCallback(() => {
+    document.body.style.overflow = "hidden";
     setExpanded(true);
-  };
+  }, []);
 
-  const collapse = () => {
+  const collapse = React.useCallback(() => {
     // enable scrolling on body
     document.body.style.overflow = "";
     setExpanded(false);
-  };
+  }, []);
 
-  const goToPreviousPage = () => {
-    if (scrollRef.current) {
-      scrollRef.current.scrollTo({
-        left: scrollRef.current.scrollLeft - 235,
-        behavior: "smooth",
-      });
-    }
-  };
   const { t } = useTranslation();
   const votingForm = useVotingForm();
   const mode = votingForm.watch("mode");
@@ -111,117 +209,24 @@ const DesktopPoll: React.FunctionComponent = () => {
     collapse();
   });
 
-  function TableControls() {
-    return (
-      <div className="flex items-center gap-4">
-        {poll.options[0]?.duration !== 0 && poll.timeZone ? (
-          <>
-            <TimesShownIn />
-            <span className="h-4 w-px bg-border" />
-          </>
-        ) : null}
-        <div className="text-muted-foreground text-sm">
-          <Trans
-            i18nKey="optionCount"
-            values={{ count: poll.options.length }}
-          />
-        </div>
-        <div className="flex gap-x-1">
-          {isOverflowing ? (
-            <>
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  <Button
-                    variant="ghost"
-                    size="icon"
-                    disabled={x === 0}
-                    onClick={goToPreviousPage}
-                  >
-                    <Icon>
-                      <ArrowLeftIcon />
-                    </Icon>
-                  </Button>
-                </TooltipTrigger>
-                <TooltipContent>
-                  <Trans i18nKey="scrollLeft" defaults="Scroll Left" />
-                </TooltipContent>
-              </Tooltip>
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  <Button
-                    className="relative"
-                    variant="ghost"
-                    size="icon"
-                    disabled={Boolean(
-                      scrollRef.current &&
-                        x + scrollRef.current.offsetWidth >=
-                          scrollRef.current.scrollWidth,
-                    )}
-                    onClick={() => {
-                      goToNextPage();
-                    }}
-                  >
-                    <Icon>
-                      <ArrowRightIcon />
-                    </Icon>
-                    {!didScroll ? (
-                      <span className="absolute -top-0.5 -right-0.5 flex size-2">
-                        <span className="absolute top-0 right-0 inline-flex h-full w-full animate-ping rounded-full bg-rose-400 opacity-75" />
-                        <span className="relative inline-flex size-2 rounded-full bg-rose-500" />
-                      </span>
-                    ) : null}
-                  </Button>
-                </TooltipTrigger>
-                <TooltipContent>
-                  <Trans i18nKey="scrollRight" defaults="Scroll Right" />
-                </TooltipContent>
-              </Tooltip>
-              {expanded ? (
-                <Tooltip>
-                  <TooltipTrigger asChild>
-                    <Button
-                      variant="ghost"
-                      size="icon"
-                      onClick={() => {
-                        collapse();
-                      }}
-                    >
-                      <Icon>
-                        <ShrinkIcon />
-                      </Icon>
-                    </Button>
-                  </TooltipTrigger>
-                  <TooltipContent>
-                    <Trans i18nKey="shrink" defaults="Shrink" />
-                  </TooltipContent>
-                </Tooltip>
-              ) : (
-                <Tooltip delayDuration={0}>
-                  <TooltipTrigger asChild>
-                    <Button
-                      variant="ghost"
-                      size="icon"
-                      onClick={() => {
-                        expand();
-                      }}
-                    >
-                      <Icon>
-                        <ExpandIcon />
-                      </Icon>
-                    </Button>
-                  </TooltipTrigger>
-                  <TooltipContent>
-                    <Trans i18nKey="expand" defaults="Expand" />
-                  </TooltipContent>
-                </Tooltip>
-              )}
-              {expanded ? <EscapeListener onEscape={collapse} /> : null}
-            </>
-          ) : null}
-        </div>
-      </div>
-    );
-  }
+  const goToNextPage = React.useCallback(() => {
+    setDidScroll(true);
+    if (scrollRef.current) {
+      scrollRef.current.scrollTo({
+        left: scrollRef.current.scrollLeft + 235,
+        behavior: "smooth",
+      });
+    }
+  }, []);
+
+  const goToPreviousPage = React.useCallback(() => {
+    if (scrollRef.current) {
+      scrollRef.current.scrollTo({
+        left: scrollRef.current.scrollLeft - 235,
+        behavior: "smooth",
+      });
+    }
+  }, []);
 
   return (
     <Card>
@@ -264,7 +269,25 @@ const DesktopPoll: React.FunctionComponent = () => {
                   </Button>
                 ) : null}
               </div>
-              <TableControls />
+              <TableControls
+                optionCount={poll.options.length}
+                showTimeZone={
+                  poll.options[0]?.duration !== 0 && !!poll.timeZone
+                }
+                showScrollControls={isOverflowing}
+                canScrollPrev={x > 0}
+                canScrollNext={
+                  !scrollRef.current ||
+                  x + scrollRef.current.offsetWidth <
+                    scrollRef.current.scrollWidth
+                }
+                showScrollIndicator={!didScroll}
+                expanded={expanded}
+                onExpand={expand}
+                onCollapse={collapse}
+                onGoToPreviousPage={goToPreviousPage}
+                onGoToNextPage={goToNextPage}
+              />
             </CardHeader>
             <div className="flex min-h-0 flex-1 flex-col">
               {participants.length > 0 || mode !== "view" ? (
