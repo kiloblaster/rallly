@@ -1,24 +1,24 @@
-import { defineConfig, devices } from "@playwright/test";
+import { defineConfig } from "@playwright/test";
 import { config } from "dotenv";
 
-config({ path: "../../.env" });
+config({ path: "../../apps/web/.env" });
 
-const port = process.env.PORT || 3000;
-const baseURL = `http://localhost:${port}`;
+const PORT = 3100;
+const baseURL = `http://localhost:${PORT}`;
 
 export default defineConfig({
   testDir: "./capture",
   outputDir: "./test-results",
-  projects: [{ name: "chromium", use: { ...devices["Desktop Chrome"] } }],
+  projects: [{ name: "chromium" }],
   use: {
     viewport: { width: 1440, height: 900 },
     baseURL,
   },
   webServer: {
-    command: `HIDE_DEV_INDICATOR=true pnpm --filter @rallly/web exec next dev --port ${port}`,
-    url: `${baseURL}/login`,
+    command: `NEXT_PUBLIC_BASE_URL=${baseURL} HIDE_DEV_INDICATOR=true pnpm --filter @rallly/web exec next dev --port ${PORT}`,
+    url: baseURL,
     reuseExistingServer: true,
-    timeout: 30000,
+    timeout: 120000,
   },
   retries: 0,
   workers: 1,

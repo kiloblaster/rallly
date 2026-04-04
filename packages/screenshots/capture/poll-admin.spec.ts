@@ -1,12 +1,14 @@
 import { test } from "@playwright/test";
 import { prisma } from "@rallly/database";
-import { loginWithEmail } from "@rallly/test-helpers";
+import { deleteAllMessages, loginWithEmail } from "@rallly/test-helpers";
 import dayjs from "dayjs";
 import { screenshotPath } from "./helpers";
 
 const pollId = "screenshot-poll";
 
 test.beforeAll(async () => {
+  await deleteAllMessages();
+
   const existingPoll = await prisma.poll.findUnique({
     where: { id: pollId },
   });
@@ -22,7 +24,7 @@ test.beforeAll(async () => {
       description:
         "Let's find a time to discuss our goals and priorities for the upcoming quarter.",
       location: "Conference Room A",
-      userId: "pro-user",
+      userId: "user-1",
       spaceId: "space-2",
       status: "open",
       timeZone: "America/New_York",
@@ -101,7 +103,7 @@ test.afterAll(async () => {
 });
 
 test("poll admin", async ({ page }) => {
-  await loginWithEmail(page, { email: "dev+pro@rallly.co" });
+  await loginWithEmail(page, { email: "dev@rallly.co" });
   await page.goto(`/poll/${pollId}`);
   await page.waitForLoadState("networkidle");
   await page.screenshot({
