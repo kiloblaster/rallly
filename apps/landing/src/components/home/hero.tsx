@@ -87,7 +87,7 @@ export const MarketingHero = ({
       <header className="sm:p-8">
         <div>
           <Link
-            href="/blog/white-labeling-support"
+            href="/blog/introducing-custom-branding"
             className="group relative inline-flex items-center gap-x-2 rounded-full border bg-gray-50 py-1 pr-4 pl-1 text-gray-600 text-sm leading-6 hover:bg-white"
           >
             <Badge variant="secondary">
@@ -96,8 +96,8 @@ export const MarketingHero = ({
             <span className="flex items-center gap-x-1">
               <Trans
                 ns="home"
-                i18nKey="whiteLabelingBlog"
-                defaults="White Labeling for Self-Hosted Instances"
+                i18nKey="customBrandingBlog"
+                defaults="Introducing Custom Branding"
               />
               <ChevronRightIcon
                 className="-mr-1 size-4 transition-transform group-active:translate-x-0.5"

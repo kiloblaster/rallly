@@ -622,9 +622,6 @@
   "pollClosedDescription": "No more responses are being accepted.",
   "showBrandingDescription": "Show your brand identity on your public pages and emails",
   "useCustomBranding": "Enable Custom Branding",
-  "savingBranding": "Saving...",
-  "brandingSaved": "Branding saved",
-  "brandingSaveError": "Failed to save branding",
   "customBranding": "Custom Branding",
   "customBrandingDescription": "Show your logo and brand colors to your participants"
 }
