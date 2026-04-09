@@ -2,8 +2,8 @@
 
 import { cn } from "@rallly/ui";
 import type { AvatarProps } from "@rallly/ui/avatar";
-import { Avatar, AvatarFallback, AvatarImage } from "@rallly/ui/avatar";
-import { resolveStorageUrl } from "@/utils/storage";
+import { Avatar, AvatarFallback } from "@rallly/ui/avatar";
+import Image from "next/image";
 
 type SpaceIconProps = {
   name: string;
@@ -14,10 +14,19 @@ type SpaceIconProps = {
 export function SpaceIcon({ name, src, className, size }: SpaceIconProps) {
   return (
     <Avatar className={cn(className)} size={size}>
-      {src ? <AvatarImage src={resolveStorageUrl(src)} alt={name} /> : null}
-      <AvatarFallback seed={name}>
-        {name.slice(0, 2).toUpperCase()}
-      </AvatarFallback>
+      {src ? (
+        <Image
+          src={`/api/storage/${src}`}
+          width={128}
+          height={128}
+          alt={name}
+          style={{ objectFit: "cover" }}
+        />
+      ) : (
+        <AvatarFallback seed={name}>
+          {name.slice(0, 2).toUpperCase()}
+        </AvatarFallback>
+      )}
     </Avatar>
   );
 }
