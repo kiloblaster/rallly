@@ -10,7 +10,7 @@
 
 :root {
   --radius: 0.625rem;
-  --primary: var(--primary-light, var(--color-gray-800));
+  --primary: var(--primary-light, var(--color-indigo-600));
   --primary-foreground: var(--primary-light-foreground, var(--color-white));
 
   --button-outline: rgba(0, 0, 0, 0.1);
