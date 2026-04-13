@@ -70,7 +70,7 @@ const PollOptionVoteSummary: React.FunctionComponent<{ optionId: string }> = ({
               <div key={i} className="flex">
                 <div className="relative mr-2.5 flex size-4 items-center justify-center">
                   <OptimizedAvatarImage
-                    size="sm"
+                    size="md"
                     name={name}
                     email={email ?? undefined}
                     src={image ?? undefined}
@@ -89,7 +89,7 @@ const PollOptionVoteSummary: React.FunctionComponent<{ optionId: string }> = ({
               <div key={i} className="flex">
                 <div className="relative mr-2.5 flex size-4 items-center justify-center">
                   <OptimizedAvatarImage
-                    size="sm"
+                    size="md"
                     name={name}
                     email={email ?? undefined}
                     src={image ?? undefined}
@@ -110,7 +110,7 @@ const PollOptionVoteSummary: React.FunctionComponent<{ optionId: string }> = ({
               <div key={i} className="flex">
                 <div className="relative mr-2.5 flex size-4 items-center justify-center">
                   <OptimizedAvatarImage
-                    size="sm"
+                    size="md"
                     name={name}
                     email={email ?? undefined}
                     src={image ?? undefined}
