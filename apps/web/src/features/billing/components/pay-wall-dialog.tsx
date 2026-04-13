@@ -50,7 +50,7 @@ function KeyBenefitsItem({
 }) {
   return (
     <li className="flex items-center gap-3">
-      <div className="rounded-lg border bg-muted p-2 text-muted-foreground">
+      <div className="mt-1.5 inline-flex size-9 items-center justify-center rounded-lg border bg-muted text-muted-foreground">
         <Icon>{icon}</Icon>
       </div>
       <div>
