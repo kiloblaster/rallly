@@ -27,7 +27,7 @@ const FAQ = async (props: { locale: string }) => {
           defaults="Can I use Rallly for free?"
         />
       </h3>
-      <p className="col-span-2 text-slate-600 text-sm leading-relaxed">
+      <p className="col-span-2 text-muted-foreground text-sm leading-relaxed">
         <Trans
           t={t}
           ns="pricing"
@@ -43,7 +43,7 @@ const FAQ = async (props: { locale: string }) => {
           defaults="Why should I upgrade?"
         />
       </h3>
-      <p className="col-span-2 text-slate-600 text-sm leading-relaxed">
+      <p className="col-span-2 text-muted-foreground text-sm leading-relaxed">
         <Trans
           t={t}
           ns="pricing"
@@ -59,7 +59,7 @@ const FAQ = async (props: { locale: string }) => {
           defaults="When does a poll become inactive?"
         />
       </h3>
-      <p className="col-span-2 text-slate-600 text-sm leading-relaxed">
+      <p className="col-span-2 text-muted-foreground text-sm leading-relaxed">
         <Trans
           t={t}
           ns="pricing"
@@ -75,7 +75,7 @@ const FAQ = async (props: { locale: string }) => {
           defaults="How do I upgrade to a paid plan?"
         />
       </h3>
-      <p className="col-span-2 text-slate-600 text-sm leading-relaxed">
+      <p className="col-span-2 text-muted-foreground text-sm leading-relaxed">
         <Trans
           t={t}
           ns="pricing"
@@ -101,7 +101,7 @@ const FAQ = async (props: { locale: string }) => {
           defaults="How do I cancel my subscription?"
         />
       </h3>
-      <p className="col-span-2 text-slate-600 text-sm leading-relaxed">
+      <p className="col-span-2 text-muted-foreground text-sm leading-relaxed">
         <Trans
           t={t}
           ns="pricing"
