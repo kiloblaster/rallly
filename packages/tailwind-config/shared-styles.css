@@ -103,7 +103,7 @@
 
   --card: oklch(0.24 0.006 286.033);
   --card-border: var(--color-gray-700);
-  --card-foreground: var(--color-gray-300);
+  --card-foreground: var(--color-white);
   --card-accent: oklch(0.26 0.006 286.033);
 }
 
