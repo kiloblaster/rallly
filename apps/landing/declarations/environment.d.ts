@@ -10,17 +10,9 @@ declare global {
        */
       NODE_ENV: "development" | "production";
       /**
-       * Set to "true" to take users straight to app instead of landing page
-       */
-      DISABLE_LANDING_PAGE?: string;
-      /**
        * Must be 32 characters long
        */
       SECRET_PASSWORD: string;
-      /**
-       * "1" to turn on maintenance mode
-       */
-      NEXT_PUBLIC_MAINTENANCE_MODE?: string;
       /**
        * Posthog API key
        */

@@ -14,7 +14,6 @@ export const env = createEnv({
       .enum(["development", "production", "test"])
       .default("development"),
     SECRET_PASSWORD: z.string().min(32),
-    API_SECRET: z.string().min(32).optional(),
     /**
      * OIDC Configuration
      */
@@ -185,7 +184,6 @@ export const env = createEnv({
     DATABASE_URL: process.env.DATABASE_URL,
     NODE_ENV: process.env.NODE_ENV,
     SECRET_PASSWORD: process.env.SECRET_PASSWORD,
-    API_SECRET: process.env.API_SECRET,
     OIDC_NAME: process.env.OIDC_NAME,
     OIDC_DISCOVERY_URL: process.env.OIDC_DISCOVERY_URL,
     OIDC_CLIENT_ID: process.env.OIDC_CLIENT_ID,

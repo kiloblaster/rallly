@@ -14,10 +14,6 @@ declare global {
        */
       SECRET_PASSWORD: string;
       /**
-       * "1" to turn on maintenance mode
-       */
-      NEXT_PUBLIC_MAINTENANCE_MODE?: string;
-      /**
        * Posthog API key
        */
       NEXT_PUBLIC_POSTHOG_API_KEY?: string;
