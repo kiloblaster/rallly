@@ -20,7 +20,7 @@ function IconDescriptionList({
 }: React.HTMLAttributes<HTMLDListElement>) {
   return (
     <dl
-      className="flex flex-col gap-x-2 gap-y-1 text-muted-foreground text-xs"
+      className="flex flex-col gap-x-2 gap-y-1 text-muted-foreground text-xs sm:flex-row"
       {...props}
     >
       {children}
@@ -48,60 +48,56 @@ export function EventCard() {
   return (
     <Card>
       <RandomGradientBar />
-      <CardContent className="flex flex-col gap-x-8 gap-y-4 md:flex-row">
-        <div className="flex flex-1 flex-col">
-          {poll.space?.showBranding && poll.space.image ? (
-            <div className="mb-2">
-              <SpaceIcon
-                name={poll.space.name}
-                src={poll.space.image}
-                size="xl"
-              />
-              <p className="mt-2 font-medium text-muted-foreground text-sm">
-                {poll.space.name}
-              </p>
-            </div>
-          ) : null}
-          <div className="flex items-start justify-between gap-2">
-            <EventMetaTitle>{poll.title}</EventMetaTitle>
+      <CardContent>
+        {poll.space?.showBranding && poll.space.image ? (
+          <div className="mb-2">
+            <SpaceIcon
+              name={poll.space.name}
+              src={poll.space.image}
+              size="xl"
+            />
+            <p className="mt-2 font-medium text-muted-foreground text-sm">
+              {poll.space.name}
+            </p>
           </div>
-          {poll.description ? (
-            <EventMetaDescription>{poll.description}</EventMetaDescription>
+        ) : null}
+        <div>
+          <EventMetaTitle>{poll.title}</EventMetaTitle>
+          <EventMetaDescription className="mt-2">
+            {poll.description}
+          </EventMetaDescription>
+        </div>
+        <EventMetaList className="mt-4">
+          {poll.user ? (
+            <EventMetaItem>
+              <User2Icon />
+              {poll.user.name}
+            </EventMetaItem>
           ) : null}
-          <EventMetaList className="pt-4 md:mt-auto">
-            {poll.user ? (
-              <EventMetaItem>
-                <User2Icon />
-                {poll.user.name}
-              </EventMetaItem>
-            ) : null}
-            {poll.location ? (
-              <EventMetaItem>
-                <MapPinIcon />
-                <TruncatedLinkify>{poll.location}</TruncatedLinkify>
-              </EventMetaItem>
-            ) : null}
-          </EventMetaList>
-        </div>
-        <div className="w-full md:w-1/3">
-          <h2 className="mb-2 font-medium text-sm">
-            <Trans i18nKey="responseOptions" defaults="Response Options" />
-          </h2>
-          <IconDescriptionList aria-label="Response Options">
-            <IconDescription
-              icon={<VoteIcon type="yes" />}
-              label={<Trans i18nKey="yes" defaults="Yes" />}
-            />
-            <IconDescription
-              icon={<VoteIcon type="ifNeedBe" />}
-              label={<Trans i18nKey="ifNeedBe" defaults="If need be" />}
-            />
-            <IconDescription
-              icon={<VoteIcon type="no" />}
-              label={<Trans i18nKey="no" defaults="No" />}
-            />
-          </IconDescriptionList>
-        </div>
+          {poll.location ? (
+            <EventMetaItem>
+              <MapPinIcon />
+              <TruncatedLinkify>{poll.location}</TruncatedLinkify>
+            </EventMetaItem>
+          ) : null}
+        </EventMetaList>
+        <h2 className="mt-4 mb-2 font-medium text-sm">
+          <Trans i18nKey="responseOptions" defaults="Response Options" />
+        </h2>
+        <IconDescriptionList aria-label="Response Options">
+          <IconDescription
+            icon={<VoteIcon type="yes" />}
+            label={<Trans i18nKey="yes" defaults="Yes" />}
+          />
+          <IconDescription
+            icon={<VoteIcon type="ifNeedBe" />}
+            label={<Trans i18nKey="ifNeedBe" defaults="If need be" />}
+          />
+          <IconDescription
+            icon={<VoteIcon type="no" />}
+            label={<Trans i18nKey="no" defaults="No" />}
+          />
+        </IconDescriptionList>
       </CardContent>
     </Card>
   );

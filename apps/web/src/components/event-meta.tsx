@@ -27,7 +27,7 @@ export function EventMetaDescription({
     <p
       className={cn(
         className,
-        "mt-2 min-w-0 whitespace-pre-wrap text-pretty text-muted-foreground text-sm leading-relaxed",
+        "min-w-0 whitespace-pre-wrap text-pretty text-muted-foreground text-sm leading-relaxed",
       )}
     >
       <TruncatedLinkify>{children}</TruncatedLinkify>
